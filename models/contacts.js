@@ -49,7 +49,8 @@ const updateContact = async (contactId, body) => {
   if(index === -1){
     return;
   }
-  const contact = contacts.find(phone => phone.id === contactId)
+  const contact = contacts[index]
+  console.log(contact);
   contacts[index] = {id: contactId, ...contact, ...body}
  await fs.writeFile(currentPath, JSON.stringify(contacts, null, 2))
  return contacts[index]
