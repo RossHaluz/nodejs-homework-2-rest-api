@@ -12,7 +12,12 @@ const Joi = require("joi");
     phone: Joi.string()
   })
 
+const addPatchSchema = Joi.object({
+    favorite: Joi.boolean().required()
+  })
+
   module.exports = {
     addSchema,
-    addPutSchema
+    addPutSchema,
+    addPatchSchema
   }
