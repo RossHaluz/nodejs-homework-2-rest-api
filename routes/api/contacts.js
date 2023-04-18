@@ -12,7 +12,9 @@ router.get("/:contactId", ctrl.getById);
 
 router.post("/", validateBody(schema.addSchema), ctrl.add);
 
-router.put("/:contactId", validateBody(schema.addPutSchema),  ctrl.updateById);
+router.put("/:contactId", validateBody(schema.addPutSchema), ctrl.updateById);
+
+router.patch("/:contactId/favorite", validateBody(schema.addPatchSchema),  ctrl.updateStatusContact);
 
 router.delete("/:contactId", ctrl.removeById);
 
