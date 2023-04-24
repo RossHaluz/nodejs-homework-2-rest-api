@@ -16,8 +16,14 @@ const addPatchSchema = Joi.object({
     favorite: Joi.boolean().required()
   })
 
+  const authSchema = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  })
+
   module.exports = {
     addSchema,
     addPutSchema,
-    addPatchSchema
+    addPatchSchema,
+    authSchema
   }

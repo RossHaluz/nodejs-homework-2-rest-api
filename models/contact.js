@@ -1,4 +1,4 @@
-const { Schema, model, default: mongoose } = require("mongoose")
+const { Schema, model } = require("mongoose")
 const handleMongooseError = require("../helpers/handleMongooseError")
 
 const contactSchema = new Schema({
@@ -18,7 +18,7 @@ const contactSchema = new Schema({
     },
 }, { versionKey: false, timestamps: true })
 
-mongoose.put("save", handleMongooseError)
+contactSchema.post("save", handleMongooseError)
 
 const Contact = model("contact", contactSchema);
 
