@@ -45,8 +45,19 @@ const logout = async (req, res, next) => {
   res.status(204).end();
 };
 
+const current = async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id);
+  console.log(user);
+  res.status(200).json({
+    email: user.email,
+    subscription: user.subscription,
+  });
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   logout: ctrlWrapper(logout),
+  current: ctrlWrapper(current),
 };

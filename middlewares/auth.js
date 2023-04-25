@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { HttpError } = require("../helpers/HttpError");
 
 const auth = async (req, res, next) => {
-  const authHeasder = req.headers.authorization;
+  const authHeasder = req.headers.authorization || "";
   if (!authHeasder) {
     next(HttpError(401, "Not authorized"));
   }
