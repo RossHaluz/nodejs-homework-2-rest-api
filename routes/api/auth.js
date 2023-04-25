@@ -2,6 +2,7 @@ const router = require("express").Router();
 const userControlers = require("../../controlers/users");
 
 const { validateBody } = require("../../middlewares");
+const { auth } = require("../../middlewares");
 const schema = require("../../schema/contacts");
 
 // Register routes
@@ -13,5 +14,8 @@ router.post(
 
 // Login routes
 router.post("/login", validateBody(schema.authSchema), userControlers.login);
+
+// Logout routes
+router.post("/logout", auth, userControlers.logout);
 
 module.exports = router;
