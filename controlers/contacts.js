@@ -9,9 +9,15 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   const { contactId } = req.params;
+  const { id } = req.user;
   const result = await Contact.findById(contactId);
+  const contactOwnerId = result.owner.toString();
+
   if (!result) {
     throw HttpError(404, "Not found");
+  }
+  if (id !== contactOwnerId) {
+    return res.status(403).json({ message: "Forbidden" });
   }
   res.json(result);
 };
@@ -25,10 +31,16 @@ const add = async (req, res) => {
 
 const removeById = async (req, res) => {
   const { contactId } = req.params;
+  const { id } = req.user;
   const result = await Contact.findByIdAndDelete(contactId);
+  const contactOwnerId = result.owner.toString();
 
   if (!result) {
     throw HttpError(404, "Not Found");
+  }
+
+  if (id !== contactOwnerId) {
+    return res.status(403).json({ message: "Forbidden" });
   }
 
   res.json({
