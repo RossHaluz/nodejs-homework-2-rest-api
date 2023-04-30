@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs/promises");
 
 const avatarDir = path.join(__dirname, "..", "public", "avatars");
 
@@ -64,10 +64,10 @@ const current = async (req, res) => {
 const uploadAvatar = async (req, res) => {
   const { id } = req.user;
   const { path: tempUpload, originalname } = req.file;
-  console.log(req.file);
-  const resultUpload = path.join(avatarDir, originalname);
+  const filename = `${id}_${originalname}`
+  const resultUpload = path.join(avatarDir, filename);
   await fs.rename(tempUpload, resultUpload);
-  const avatarURL = path.join("avatars", originalname);
+  const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(id, { avatarURL });
 
   res.json({
