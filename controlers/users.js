@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
+const Jimp = require("jimp"); 
+const crypto = require("crypto")
 
 const avatarDir = path.join(__dirname, "..", "public", "avatars");
 
@@ -63,9 +65,12 @@ const current = async (req, res) => {
 
 const uploadAvatar = async (req, res) => {
   const { id } = req.user;
-  const { path: tempUpload, originalname } = req.file;
-  const filename = `${id}_${originalname}`;
+  const { path: tempUpload, originalname } = req.file; 
+  const filename = `${crypto.randomUUID()}_${originalname}`;
   const resultUpload = path.join(avatarDir, filename);
+await Jimp.read(resultUpload).then(img => {
+  return img.resize(250, Jimp.AUTO).writeAsync(resultUpload)
+}).catch(err => console.log(err))
   await fs.rename(tempUpload, resultUpload);
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(id, { avatarURL });
