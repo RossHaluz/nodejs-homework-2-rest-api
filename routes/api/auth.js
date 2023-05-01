@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const userControlers = require("../../controlers/users");
 
-const { validateBody } = require("../../middlewares");
-const { auth } = require("../../middlewares");
+const { validateBody, auth, upload } = require("../../middlewares");
 const schema = require("../../schema/contacts");
 
 // Register routes
@@ -20,5 +19,8 @@ router.post("/logout", auth, userControlers.logout);
 
 // Current routes
 router.post("/current", auth, userControlers.current);
+
+// Add avatar 
+router.patch("/avatars", auth, upload.single("avatar"), userControlers.uploadAvatar)
 
 module.exports = router;
