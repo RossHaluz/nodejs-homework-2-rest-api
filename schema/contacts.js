@@ -16,6 +16,10 @@ const addPatchSchema = Joi.object({
     favorite: Joi.boolean().required()
   })
 
+  const emailSchema = Joi.object({
+    email: Joi.string().required(),
+  })
+
   const authSchema = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required(),
@@ -25,5 +29,6 @@ const addPatchSchema = Joi.object({
     addSchema,
     addPutSchema,
     addPatchSchema,
-    authSchema
+    authSchema,
+    emailSchema
   }
